@@ -3,6 +3,7 @@ package com.cooksys.groupfinal.services;
 import java.util.Set;
 
 import com.cooksys.groupfinal.dtos.*;
+import org.springframework.web.bind.annotation.PathVariable;
 
 public interface CompanyService {
 
@@ -15,4 +16,7 @@ public interface CompanyService {
 	Set<ProjectDto> getAllProjects(Long companyId, Long teamId);
 
 	CompanyDto createCompany(CompanyDto companyDto);
+
+	CompanyDto addUserToCompany(Long companyId, Long userId);
+
 }

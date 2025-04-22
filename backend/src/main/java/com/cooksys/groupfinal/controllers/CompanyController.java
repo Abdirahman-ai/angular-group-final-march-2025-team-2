@@ -38,9 +38,14 @@ public class CompanyController {
 	}
 
     @PostMapping
-    @CrossOrigin(origins = "*")
+    @CrossOrigin(origins = "*")  // admin only
     public CompanyDto createCompany(@RequestBody CompanyDto companyDto) {
         return companyService.createCompany(companyDto);
     }
 
+    @PostMapping("/{companyId}/add-user/{userId}")
+    @CrossOrigin(origins = "*")
+    public CompanyDto addUserToCompany(@PathVariable Long companyId, @PathVariable Long userId) {
+        return companyService.addUserToCompany(companyId, userId);
+    }
 }
