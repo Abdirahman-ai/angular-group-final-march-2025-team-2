@@ -2,6 +2,7 @@ package com.cooksys.groupfinal.services.impl;
 
 import java.util.Optional;
 
+import com.cooksys.groupfinal.dtos.UserRequestDto;
 import org.springframework.stereotype.Service;
 
 import com.cooksys.groupfinal.dtos.CredentialsDto;
@@ -50,11 +51,13 @@ public class UserServiceImpl implements UserService {
         }
         return fullUserMapper.entityToFullUserDto(userToValidate);
 	}
-	
-	
-	
-	
-	
-	
 
+    @Override
+    public FullUserDto getUserById(long id) {
+        Optional<User> userOpt = userRepository.findById(id);
+        if (userOpt.isEmpty() || !userOpt.get().isActive()) {
+            throw new NotFoundException("User with ID " + id + " not found or inactive.");
+        }
+        return fullUserMapper.entityToFullUserDto(userOpt.get());
+    }
 }
