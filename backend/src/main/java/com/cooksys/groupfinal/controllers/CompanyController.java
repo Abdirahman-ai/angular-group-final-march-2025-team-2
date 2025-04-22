@@ -55,6 +55,12 @@ public class CompanyController {
         return companyService.editCompanyInfo(companyId, companyDto);
     }
 
+    @GetMapping
+    @CrossOrigin(origins = "*")
+    public List<CompanyDto> getAllCompanies(){
+        return companyService.getAllCompanies();
+    }
+
     @GetMapping("/{companyId}")
     public CompanyDto getCompanyById(@PathVariable long companyId){
         return companyService.getCompanyById(companyId);
