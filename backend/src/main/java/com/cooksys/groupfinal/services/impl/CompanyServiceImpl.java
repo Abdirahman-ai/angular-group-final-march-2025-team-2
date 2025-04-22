@@ -11,6 +11,7 @@ import java.util.Set;
 import com.cooksys.groupfinal.dtos.*;
 import com.cooksys.groupfinal.exceptions.BadRequestException;
 import com.cooksys.groupfinal.mappers.*;
+import com.cooksys.groupfinal.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import com.cooksys.groupfinal.entities.Announcement;
@@ -24,6 +25,7 @@ import com.cooksys.groupfinal.repositories.TeamRepository;
 import com.cooksys.groupfinal.services.CompanyService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +38,7 @@ public class CompanyServiceImpl implements CompanyService {
 	private final AnnouncementMapper announcementMapper;
 	private final TeamMapper teamMapper;
 	private final ProjectMapper projectMapper;
+	private final UserRepository userRepository;
 	
 	private Company findCompany(Long id) {
         Optional<Company> company = companyRepository.findById(id);
@@ -104,4 +107,22 @@ public class CompanyServiceImpl implements CompanyService {
 
 		return companyMapper.entityToDto(company);
 	}
+
+	@Override
+	public CompanyDto addUserToCompany(Long companyId, Long userId) {
+		Company company = findCompany(companyId);
+
+		Optional<User> userOptional = userRepository.findById(userId);
+		if(userOptional.isEmpty()){
+			throw new NotFoundException("User with id: " + userId + "not found!");
+		}
+
+		User user = userOptional.get();
+		company.getEmployees().add(user);
+
+		companyRepository.saveAndFlush(company);
+
+		return companyMapper.entityToDto(company);
+	}
+
 }
