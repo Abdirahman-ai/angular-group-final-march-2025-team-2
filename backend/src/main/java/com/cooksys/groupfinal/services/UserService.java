@@ -7,5 +7,7 @@ public interface UserService {
 
 	FullUserDto login(CredentialsDto credentialsDto);
 
+	FullUserDto updateUserStatus(Long id, String newStatus);
+
    
 }

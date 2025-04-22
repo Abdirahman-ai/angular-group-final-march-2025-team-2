@@ -50,11 +50,18 @@ public class UserServiceImpl implements UserService {
         }
         return fullUserMapper.entityToFullUserDto(userToValidate);
 	}
-	
-	
-	
-	
-	
-	
 
+    @Override
+    public FullUserDto updateUserStatus(Long id, String newStatus) {
+        Optional<User> userOptional = userRepository.findById(id);
+
+        if(userOptional.isEmpty()){
+            throw new NotFoundException("User not found");
+        }
+        User user = userOptional.get();
+        user.setStatus(newStatus);
+        User updated = userRepository.save(user);
+
+        return fullUserMapper.entityToFullUserDto(updated);
+    }
 }

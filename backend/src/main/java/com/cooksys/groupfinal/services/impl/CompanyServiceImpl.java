@@ -8,12 +8,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import com.cooksys.groupfinal.dtos.*;
+import com.cooksys.groupfinal.exceptions.BadRequestException;
+import com.cooksys.groupfinal.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
-import com.cooksys.groupfinal.dtos.AnnouncementDto;
-import com.cooksys.groupfinal.dtos.FullUserDto;
-import com.cooksys.groupfinal.dtos.ProjectDto;
-import com.cooksys.groupfinal.dtos.TeamDto;
 import com.cooksys.groupfinal.entities.Announcement;
 import com.cooksys.groupfinal.entities.Company;
 import com.cooksys.groupfinal.entities.Project;
@@ -36,6 +35,7 @@ public class CompanyServiceImpl implements CompanyService {
 	
 	private final CompanyRepository companyRepository;
 	private final TeamRepository teamRepository;
+	private final UserRepository userRepository;
 	private final FullUserMapper fullUserMapper;
 	private final AnnouncementMapper announcementMapper;
 	private final TeamMapper teamMapper;
@@ -94,4 +94,38 @@ public class CompanyServiceImpl implements CompanyService {
 		return projectMapper.entitiesToDtos(filteredProjects);
 	}
 
+	@Override
+	public TeamDto removeUser(Long companyId, Long teamId, Long userId) {
+		Optional<Company> companyOptional = companyRepository.findById(companyId);
+		Optional<Team> teamOptional = teamRepository.findById(teamId);
+		Optional<User> userOptional = userRepository.findById(userId);
+
+		if(companyOptional.isEmpty()){
+			throw new NotFoundException("Company does not exist");
+		}
+
+		if(teamOptional.isEmpty()){
+			throw new NotFoundException("Team does not exist");
+		}
+
+		if(userOptional.isEmpty()){
+			throw new NotFoundException("User does not exist");
+		}
+		Company company = companyOptional.get();
+		Team team = teamOptional.get();
+		User user = userOptional.get();
+
+		if(!company.getTeams().contains(team)){
+			throw new BadRequestException("The company does not have the team");
+		}
+
+		if(!team.getProjects().contains(user)){
+			throw new BadRequestException("User is not a member of the team");
+		}
+
+		team.getTeammates().remove(user);
+		teamRepository.save(team);
+
+		return teamMapper.entityToDto(team);
+	}
 }
