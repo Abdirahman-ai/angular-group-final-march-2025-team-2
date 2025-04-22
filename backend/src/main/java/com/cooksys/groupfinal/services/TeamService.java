@@ -5,4 +5,6 @@ import com.cooksys.groupfinal.dtos.TeamDto;
 public interface TeamService {
 
     TeamDto createTeam(Long companyId, TeamDto teamDto);
+
+    TeamDto addUserToTeam(Long teamId, Long userId);
 }
