@@ -1,7 +1,7 @@
 package com.cooksys.groupfinal.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.cooksys.groupfinal.dtos.TeamDto;
+import org.springframework.web.bind.annotation.*;
 
 import com.cooksys.groupfinal.services.TeamService;
 
@@ -13,5 +13,12 @@ import lombok.RequiredArgsConstructor;
 public class TeamController {
 	
 	private final TeamService teamService;
+
+
+	@PostMapping("/{companyId}/teams")
+	@CrossOrigin(origins = "*")
+	public TeamDto createTeam(@PathVariable Long companyId, @RequestBody TeamDto teamDto) {
+		return teamService.createTeam(companyId, teamDto);
+	}
 
 }
