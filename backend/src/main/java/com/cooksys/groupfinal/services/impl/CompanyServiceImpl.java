@@ -125,4 +125,19 @@ public class CompanyServiceImpl implements CompanyService {
 		return companyMapper.entityToDto(company);
 	}
 
+	@Override
+	public CompanyDto editCompanyInfo(Long companyId, CompanyDto companyDto) {
+		Company company = findCompany(companyId);
+
+		if (companyDto.getName() != null && !companyDto.getName().isEmpty()) {
+			company.setName(companyDto.getName());
+		}
+
+		if (companyDto.getDescription() != null) {
+			company.setDescription(companyDto.getDescription());
+		}
+
+		return companyMapper.entityToDto(companyRepository.saveAndFlush(company));
+	}
+
 }
