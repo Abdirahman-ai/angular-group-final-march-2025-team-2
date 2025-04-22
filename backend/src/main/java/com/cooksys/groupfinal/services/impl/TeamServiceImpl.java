@@ -58,4 +58,25 @@ public class TeamServiceImpl implements TeamService {
 
         return teamMapper.entityToDto(teamRepository.saveAndFlush(team));
     }
+
+    @Override
+    public TeamDto addUserToTeam(Long teamId, Long userId) {
+        Optional<Team> team = teamRepository.findById(teamId);
+
+        if(team.isEmpty()){
+            throw new BadRequestException("Team with id " + teamId + "not found");
+        }
+        Optional<User> userOpt = userRepository.findById(userId);
+        if(userOpt.isEmpty()){
+            throw new NotFoundException("User with id " + userId + " not found.");
+        }
+        if(!userOpt.get().isActive()){
+            throw new BadRequestException("Cannot add inactive user to a team.");
+        }
+
+        team.get().getTeammates().add(userOpt.get());
+        userOpt.get().getTeams().add(team.get());
+
+        return teamMapper.entityToDto(teamRepository.saveAndFlush(team.get()));
+    }
 }
