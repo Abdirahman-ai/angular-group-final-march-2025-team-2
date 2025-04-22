@@ -39,4 +39,21 @@ public class ProjectServiceImpl implements ProjectService {
 
         return projectMapper.entityToDto(newProject);
     }
+
+    @Override
+    public ProjectDto updateProject(long projectID, ProjectDto projectDto) {
+        Optional<Project> projectOpt = projectRepository.findById(projectID);
+        if (projectOpt.isEmpty()) {
+            throw new BadRequestException("Project with project ID: " + projectID + " does not exist!");
+        }
+
+        Project project = projectOpt.get();
+        project.setName(projectDto.getName());
+        project.setDescription(projectDto.getDescription());
+        project.setActive(projectDto.isActive());
+
+        projectRepository.saveAndFlush(project);
+
+        return projectMapper.entityToDto(project);
+    }
 }
