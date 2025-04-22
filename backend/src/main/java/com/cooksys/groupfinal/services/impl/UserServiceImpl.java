@@ -1,5 +1,8 @@
 package com.cooksys.groupfinal.services.impl;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 import com.cooksys.groupfinal.dtos.UserRequestDto;
@@ -59,5 +62,19 @@ public class UserServiceImpl implements UserService {
             throw new NotFoundException("User with ID " + id + " not found or inactive.");
         }
         return fullUserMapper.entityToFullUserDto(userOpt.get());
+    }
+
+    @Override
+    public List<FullUserDto> getAllUsers() {
+        List<User> allUsers = userRepository.findAll();
+        List<FullUserDto> activeUsers = new ArrayList<>();
+
+        for (User user : allUsers) {
+            if (user.isActive()) {
+                FullUserDto dto = fullUserMapper.entityToFullUserDto(user);
+                activeUsers.add(dto);
+            }
+        }
+        return activeUsers;
     }
 }

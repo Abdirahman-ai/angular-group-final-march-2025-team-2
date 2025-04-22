@@ -9,6 +9,8 @@ import com.cooksys.groupfinal.services.UserService;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -28,4 +30,9 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+    @GetMapping
+    @CrossOrigin(origins = "*")
+    public List<FullUserDto> getAllUsers(){
+        return userService.getAllUsers();
+    }
 }
