@@ -20,4 +20,10 @@ public class ProjectController {
 		return projectService.createProject(teamId, projectDto);
 	}
 
+	@PutMapping("/{projectID}")
+	@CrossOrigin(origins = "*")
+	public ProjectDto updateProject(@PathVariable long projectID, @RequestBody ProjectDto projectDto) {
+		return projectService.updateProject(projectID, projectDto);
+	}
+
 }
