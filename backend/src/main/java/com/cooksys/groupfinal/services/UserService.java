@@ -16,4 +16,6 @@ public interface UserService {
     List<FullUserDto> getAllUsers();
 
     FullUserDto createUser(UserRequestDto userRequestDto);
+
+    FullUserDto updateUser(Long id, UserRequestDto userRequestDto);
 }

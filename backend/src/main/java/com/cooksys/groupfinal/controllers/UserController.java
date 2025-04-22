@@ -41,4 +41,11 @@ public class UserController {
     public FullUserDto createUser(@RequestBody UserRequestDto userRequestDto) {
         return userService.createUser(userRequestDto);
     }
+
+    @PutMapping("/{id}")
+    @CrossOrigin(origins = "*")
+    public FullUserDto updateUser(@PathVariable Long id, @RequestBody UserRequestDto userRequestDto) {
+        return userService.updateUser(id, userRequestDto);
+    }
+
 }
