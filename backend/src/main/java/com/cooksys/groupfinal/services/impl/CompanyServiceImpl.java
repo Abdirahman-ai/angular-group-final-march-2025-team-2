@@ -140,4 +140,10 @@ public class CompanyServiceImpl implements CompanyService {
 		return companyMapper.entityToDto(companyRepository.saveAndFlush(company));
 	}
 
+	@Override
+	public CompanyDto getCompanyById(long companyId) {
+		Company company = findCompany(companyId);
+		return companyMapper.entityToDto(company);
+	}
+
 }

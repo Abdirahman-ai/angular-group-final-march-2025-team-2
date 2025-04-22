@@ -54,4 +54,9 @@ public class CompanyController {
     public CompanyDto editCompanyInfo(@PathVariable Long companyId, @RequestBody CompanyDto companyDto){
         return companyService.editCompanyInfo(companyId, companyDto);
     }
+
+    @GetMapping("/{companyId}")
+    public CompanyDto getCompanyById(@PathVariable long companyId){
+        return companyService.getCompanyById(companyId);
+    }
 }
