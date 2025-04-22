@@ -7,12 +7,21 @@ import com.cooksys.groupfinal.services.ProjectService;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+import java.util.Set;
+
 @RestController
 @RequestMapping("/projects")
 @RequiredArgsConstructor
 public class ProjectController {
 	
 	private final ProjectService projectService;
+
+	@GetMapping("/team/{teamID}")
+	@CrossOrigin(origins = "*")
+	public Set<ProjectDto> getAllProjects(@PathVariable long teamID){
+		return projectService.getAllProjects(teamID);
+	}
 
 	@PostMapping("/team/{teamId}")
 	@CrossOrigin(origins = "*")

@@ -13,7 +13,9 @@ import com.cooksys.groupfinal.services.ProjectService;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -55,5 +57,17 @@ public class ProjectServiceImpl implements ProjectService {
         projectRepository.saveAndFlush(project);
 
         return projectMapper.entityToDto(project);
+    }
+
+    @Override
+    public Set<ProjectDto> getAllProjects(long teamID) {
+        Optional<Team> teamOpt = teamRepository.findById(teamID);
+        if(teamOpt.isEmpty()){
+            throw new BadRequestException("Team with Team ID: " + teamID + " Does not exist!");
+        }
+
+        Set<Project> projects = teamOpt.get().getProjects();
+
+        return projectMapper.entitiesToDtos((projects));
     }
 }
