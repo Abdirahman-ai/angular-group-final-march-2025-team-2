@@ -8,22 +8,17 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import com.cooksys.groupfinal.dtos.*;
+import com.cooksys.groupfinal.exceptions.BadRequestException;
+import com.cooksys.groupfinal.mappers.*;
 import org.springframework.stereotype.Service;
 
-import com.cooksys.groupfinal.dtos.AnnouncementDto;
-import com.cooksys.groupfinal.dtos.FullUserDto;
-import com.cooksys.groupfinal.dtos.ProjectDto;
-import com.cooksys.groupfinal.dtos.TeamDto;
 import com.cooksys.groupfinal.entities.Announcement;
 import com.cooksys.groupfinal.entities.Company;
 import com.cooksys.groupfinal.entities.Project;
 import com.cooksys.groupfinal.entities.Team;
 import com.cooksys.groupfinal.entities.User;
 import com.cooksys.groupfinal.exceptions.NotFoundException;
-import com.cooksys.groupfinal.mappers.AnnouncementMapper;
-import com.cooksys.groupfinal.mappers.ProjectMapper;
-import com.cooksys.groupfinal.mappers.TeamMapper;
-import com.cooksys.groupfinal.mappers.FullUserMapper;
 import com.cooksys.groupfinal.repositories.CompanyRepository;
 import com.cooksys.groupfinal.repositories.TeamRepository;
 import com.cooksys.groupfinal.services.CompanyService;
@@ -35,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 public class CompanyServiceImpl implements CompanyService {
 	
 	private final CompanyRepository companyRepository;
+	private final CompanyMapper companyMapper;
 	private final TeamRepository teamRepository;
 	private final FullUserMapper fullUserMapper;
 	private final AnnouncementMapper announcementMapper;
@@ -94,4 +90,18 @@ public class CompanyServiceImpl implements CompanyService {
 		return projectMapper.entitiesToDtos(filteredProjects);
 	}
 
+	@Override
+	public CompanyDto createCompany(CompanyDto companyDto) {
+		if(companyDto.getName() == null || companyDto.getName().isEmpty()){
+			throw new BadRequestException("Company name is required");
+		}
+
+		Company company = new Company();
+		company.setName(companyDto.getName());
+		company.setDescription(companyDto.getDescription());
+
+		companyRepository.saveAndFlush(company);
+
+		return companyMapper.entityToDto(company);
+	}
 }
