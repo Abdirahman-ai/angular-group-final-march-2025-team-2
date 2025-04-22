@@ -48,4 +48,10 @@ public class CompanyController {
     public CompanyDto addUserToCompany(@PathVariable Long companyId, @PathVariable Long userId) {
         return companyService.addUserToCompany(companyId, userId);
     }
+
+    @PutMapping("/{companyId}")
+    @CrossOrigin(origins = "*")
+    public CompanyDto editCompanyInfo(@PathVariable Long companyId, @RequestBody CompanyDto companyDto){
+        return companyService.editCompanyInfo(companyId, companyDto);
+    }
 }
