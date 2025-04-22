@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 import com.cooksys.groupfinal.dtos.UserRequestDto;
+import com.cooksys.groupfinal.entities.Profile;
+import com.cooksys.groupfinal.entities.Project;
 import org.springframework.stereotype.Service;
 
 import com.cooksys.groupfinal.dtos.CredentialsDto;
@@ -76,5 +78,31 @@ public class UserServiceImpl implements UserService {
             }
         }
         return activeUsers;
+    }
+
+    @Override
+    public FullUserDto createUser(UserRequestDto userRequestDto) {
+        if (userRequestDto == null || userRequestDto.getCredentials() == null || userRequestDto.getProfile() == null) {
+            throw new BadRequestException("Missing required user information.");
+        }
+
+        User user = fullUserMapper.requestDtoToEntity(userRequestDto);
+
+        Credentials creds = user.getCredentials();
+        if (creds.getUsername() == null || creds.getPassword() == null ||
+                creds.getUsername().trim().isEmpty() || creds.getPassword().trim().isEmpty()) {
+            throw new BadRequestException("Username and password are required.");
+        }
+
+        Profile profile = user.getProfile();
+        if (profile.getEmail() == null || profile.getPhone() == null ||
+                profile.getFirstName() == null || profile.getLastName() == null) {
+            throw new BadRequestException("Profile information is incomplete.");
+        }
+
+        user.setActive(true);
+        user.setStatus("PENDING");
+
+        return fullUserMapper.entityToFullUserDto(userRepository.saveAndFlush(user));
     }
 }
