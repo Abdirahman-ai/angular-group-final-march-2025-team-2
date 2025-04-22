@@ -20,4 +20,6 @@ public interface CompanyService {
 	CompanyDto addUserToCompany(Long companyId, Long userId);
 
 	CompanyDto editCompanyInfo(Long companyId, CompanyDto companyDto);
+
+	CompanyDto getCompanyById(long companyId);
 }
