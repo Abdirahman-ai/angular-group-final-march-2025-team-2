@@ -1,5 +1,6 @@
 package com.cooksys.groupfinal.services;
 
+import java.util.List;
 import java.util.Set;
 
 import com.cooksys.groupfinal.dtos.*;
@@ -22,4 +23,6 @@ public interface CompanyService {
 	CompanyDto editCompanyInfo(Long companyId, CompanyDto companyDto);
 
 	CompanyDto getCompanyById(long companyId);
+
+	List<CompanyDto> getAllCompanies();
 }

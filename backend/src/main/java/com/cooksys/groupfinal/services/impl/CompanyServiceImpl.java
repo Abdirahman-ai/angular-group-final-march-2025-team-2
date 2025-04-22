@@ -26,6 +26,7 @@ import com.cooksys.groupfinal.services.CompanyService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.servlet.HandlerAdapter;
 
 @Service
 @RequiredArgsConstructor
@@ -146,4 +147,8 @@ public class CompanyServiceImpl implements CompanyService {
 		return companyMapper.entityToDto(company);
 	}
 
+	@Override
+	public List<CompanyDto> getAllCompanies() {
+		return new ArrayList<>(companyMapper.entitiesToDtos(new HashSet<>(companyRepository.findAll())));
+	}
 }
