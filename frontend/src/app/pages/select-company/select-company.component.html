@@ -1,0 +1,12 @@
+<div class="select-container">
+    <h1>Select Company</h1>
+  
+    <select [(ngModel)]="selectedCompanyId" required>
+        <option value="" disabled selected>Pick an option</option>
+        <option *ngFor="let company of companies" [value]="company.id">
+          {{ company.name }}
+        </option>
+    </select>
+          
+    <button [disabled]="!selectedCompanyId" (click)="continue()">Continue</button>
+  </div>  

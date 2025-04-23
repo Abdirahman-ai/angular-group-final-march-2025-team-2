@@ -1,0 +1,56 @@
+.select-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #071e29;
+    font-family: 'Segoe UI', sans-serif;
+    color: #2ac1a2;
+  }
+  
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+  }
+  
+  select {
+    width: 200px;
+    height: 40px;
+    padding: 1rem;
+    font-size: 1.1rem; 
+    border-radius: 10px;
+    border: none;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    color: black;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+    
+  select:invalid {
+    color: #7f57ff;
+    font-weight: bold;
+  }
+      
+  button {
+    padding: 0.6rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 20px;
+    border: 2px solid #2ac1a2;
+    background-color: transparent;
+    color: #2ac1a2;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  button:hover:not(:disabled) {
+    background-color: #2ac1a2;
+    color: white;
+  }
+  

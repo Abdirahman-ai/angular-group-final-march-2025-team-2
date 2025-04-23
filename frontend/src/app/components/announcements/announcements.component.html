@@ -1,0 +1,36 @@
+<div class="announcements-page">
+    <h1>Announcements</h1>
+    <hr />
+  
+    <!-- Admin-only New Button -->
+    <div class="actions" *ngIf="isAdmin">
+        <button (click)="showForm = !showForm">+ New</button>
+    </div>
+      
+    <!-- Admin-only Form -->
+    <div *ngIf="showForm" class="announcement-form">
+      <input
+        type="text"
+        [(ngModel)]="newAnnouncement.title"
+        placeholder="Title"
+        required
+      />
+      <textarea
+        [(ngModel)]="newAnnouncement.message"
+        placeholder="Message"
+        rows="4"
+        required
+      ></textarea>
+      <button (click)="submitAnnouncement()">Post</button>
+    </div>
+  
+    <!-- Announcements Feed -->
+    <div class="announcement-card" *ngFor="let ann of announcements">
+      <div class="announcement-header">
+        <span>{{ ann.author.profile.firstName }}, {{ ann.author.profile.lastName }}</span>
+        <span>{{ ann.date | date: 'MMMM d, y' }}</span>
+      </div>
+      <p>{{ ann.message }}</p>
+    </div>
+  </div>
+  
