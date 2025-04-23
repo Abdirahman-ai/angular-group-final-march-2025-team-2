@@ -1,6 +1,10 @@
 package com.cooksys.groupfinal.controllers;
 
 import com.cooksys.groupfinal.dtos.TeamDto;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
 import com.cooksys.groupfinal.services.TeamService;
@@ -26,4 +30,10 @@ public class TeamController {
 	public TeamDto addUserToTeam(@PathVariable Long teamId, @PathVariable Long userId) {
 		return teamService.addUserToTeam(teamId, userId);
 	}
+	@PostMapping("/{teamId}/remove-user/{userId}")
+	public TeamDto removeUserFromTeam(@PathVariable Long teamId, @PathVariable Long userId){
+		return teamService.removeUser(teamId, userId);
+	}
+
+
 }

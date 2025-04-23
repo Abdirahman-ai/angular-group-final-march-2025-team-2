@@ -2,6 +2,8 @@ package com.cooksys.groupfinal.controllers;
 
 import com.cooksys.groupfinal.dtos.UserRequestDto;
 import org.springframework.web.bind.annotation.*;
+import com.cooksys.groupfinal.dtos.StatusUpdateDto;
+import org.springframework.web.bind.annotation.*;
 
 import com.cooksys.groupfinal.dtos.CredentialsDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
@@ -46,6 +48,11 @@ public class UserController {
     @CrossOrigin(origins = "*")
     public FullUserDto updateUser(@PathVariable Long id, @RequestBody UserRequestDto userRequestDto) {
         return userService.updateUser(id, userRequestDto);
+    }
+
+    @PatchMapping("/{id}/status")
+    public FullUserDto updateUserStatus(@PathVariable Long id, @RequestBody StatusUpdateDto statusUpdateDto){
+        return userService.updateUserStatus(id, statusUpdateDto.getStatus());
     }
 
 }

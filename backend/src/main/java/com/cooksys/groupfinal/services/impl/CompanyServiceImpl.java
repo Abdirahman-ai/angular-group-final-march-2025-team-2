@@ -25,8 +25,6 @@ import com.cooksys.groupfinal.repositories.TeamRepository;
 import com.cooksys.groupfinal.services.CompanyService;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.servlet.HandlerAdapter;
 
 @Service
 @RequiredArgsConstructor
@@ -35,12 +33,13 @@ public class CompanyServiceImpl implements CompanyService {
 	private final CompanyRepository companyRepository;
 	private final CompanyMapper companyMapper;
 	private final TeamRepository teamRepository;
+	private final UserRepository userRepository;
 	private final FullUserMapper fullUserMapper;
 	private final AnnouncementMapper announcementMapper;
 	private final TeamMapper teamMapper;
 	private final ProjectMapper projectMapper;
 	private final UserRepository userRepository;
-	
+
 	private Company findCompany(Long id) {
         Optional<Company> company = companyRepository.findById(id);
         if (company.isEmpty()) {
@@ -150,5 +149,39 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public List<CompanyDto> getAllCompanies() {
 		return new ArrayList<>(companyMapper.entitiesToDtos(new HashSet<>(companyRepository.findAll())));
+	}
+	@Override
+	public TeamDto removeUser(Long companyId, Long teamId, Long userId) {
+		Optional<Company> companyOptional = companyRepository.findById(companyId);
+		Optional<Team> teamOptional = teamRepository.findById(teamId);
+		Optional<User> userOptional = userRepository.findById(userId);
+
+		if(companyOptional.isEmpty()){
+			throw new NotFoundException("Company does not exist");
+		}
+
+		if(teamOptional.isEmpty()){
+			throw new NotFoundException("Team does not exist");
+		}
+
+		if(userOptional.isEmpty()){
+			throw new NotFoundException("User does not exist");
+		}
+		Company company = companyOptional.get();
+		Team team = teamOptional.get();
+		User user = userOptional.get();
+
+		if(!company.getTeams().contains(team)){
+			throw new BadRequestException("The company does not have the team");
+		}
+
+		if(!team.getProjects().contains(user)){
+			throw new BadRequestException("User is not a member of the team");
+		}
+
+		team.getTeammates().remove(user);
+		teamRepository.save(team);
+
+		return teamMapper.entityToDto(team);
 	}
 }

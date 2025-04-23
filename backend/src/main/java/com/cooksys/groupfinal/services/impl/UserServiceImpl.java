@@ -8,7 +8,6 @@ import java.util.Optional;
 import com.cooksys.groupfinal.dtos.ProfileDto;
 import com.cooksys.groupfinal.dtos.UserRequestDto;
 import com.cooksys.groupfinal.entities.Profile;
-import com.cooksys.groupfinal.entities.Project;
 import com.cooksys.groupfinal.mappers.ProfileMapper;
 import org.springframework.stereotype.Service;
 
@@ -140,5 +139,18 @@ public class UserServiceImpl implements UserService {
         return fullUserMapper.entityToFullUserDto(userRepository.saveAndFlush(user));
     }
 
+    @Override
+    public FullUserDto updateUserStatus(Long id, String newStatus) {
+        Optional<User> userOptional = userRepository.findById(id);
+
+        if(userOptional.isEmpty()){
+            throw new NotFoundException("User not found");
+        }
+        User user = userOptional.get();
+        user.setStatus(newStatus);
+        User updated = userRepository.save(user);
+
+        return fullUserMapper.entityToFullUserDto(updated);
+    }
 
 }

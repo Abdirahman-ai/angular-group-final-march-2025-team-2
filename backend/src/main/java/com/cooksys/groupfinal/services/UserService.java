@@ -18,4 +18,7 @@ public interface UserService {
     FullUserDto createUser(UserRequestDto userRequestDto);
 
     FullUserDto updateUser(Long id, UserRequestDto userRequestDto);
+	FullUserDto updateUserStatus(Long id, String newStatus);
+
+
 }

@@ -3,9 +3,13 @@ package com.cooksys.groupfinal.controllers;
 import java.util.List;
 import java.util.Set;
 
-import com.cooksys.groupfinal.dtos.*;
 import org.springframework.web.bind.annotation.*;
 
+import com.cooksys.groupfinal.dtos.AnnouncementDto;
+import com.cooksys.groupfinal.dtos.FullUserDto;
+import com.cooksys.groupfinal.dtos.ProjectDto;
+import com.cooksys.groupfinal.dtos.TeamDto;
+import com.cooksys.groupfinal.dtos.CompanyDto;
 import com.cooksys.groupfinal.services.CompanyService;
 
 import lombok.RequiredArgsConstructor;
@@ -65,4 +69,9 @@ public class CompanyController {
     public CompanyDto getCompanyById(@PathVariable long companyId){
         return companyService.getCompanyById(companyId);
     }
+    @PostMapping("/{companyId}/team/{teamId}/remove-user/{userId}")
+    public TeamDto removeUser(@PathVariable Long companyId, @PathVariable Long teamId, @PathVariable Long userId){
+        return companyService.removeUser(companyId, teamId, userId);
+    }
+
 }
