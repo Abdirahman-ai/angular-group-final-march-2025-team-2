@@ -14,8 +14,8 @@ public class AnnouncementController {
 	
 	private final AnnouncementService announcementService;
 
-	@PatchMapping("{announcementId}")
-	public AnnouncementDto patchAnnouncement(@PathVariable String announcementId, @RequestBody AnnouncementDto updateDto){
+	@PatchMapping("/{announcementId}")
+	public AnnouncementDto patchAnnouncement(@PathVariable Long announcementId, @RequestBody AnnouncementDto updateDto){
 		return announcementService.updateAnnouncement(announcementId, updateDto);
 	}
 
