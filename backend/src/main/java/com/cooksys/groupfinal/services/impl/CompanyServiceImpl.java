@@ -38,7 +38,6 @@ public class CompanyServiceImpl implements CompanyService {
 	private final AnnouncementMapper announcementMapper;
 	private final TeamMapper teamMapper;
 	private final ProjectMapper projectMapper;
-	private final UserRepository userRepository;
 
 	private Company findCompany(Long id) {
         Optional<Company> company = companyRepository.findById(id);
