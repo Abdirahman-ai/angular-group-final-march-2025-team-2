@@ -10,6 +10,7 @@ import java.util.Set;
 
 import com.cooksys.groupfinal.dtos.*;
 import com.cooksys.groupfinal.exceptions.BadRequestException;
+import com.cooksys.groupfinal.mappers.*;
 import com.cooksys.groupfinal.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +20,6 @@ import com.cooksys.groupfinal.entities.Project;
 import com.cooksys.groupfinal.entities.Team;
 import com.cooksys.groupfinal.entities.User;
 import com.cooksys.groupfinal.exceptions.NotFoundException;
-import com.cooksys.groupfinal.mappers.AnnouncementMapper;
-import com.cooksys.groupfinal.mappers.ProjectMapper;
-import com.cooksys.groupfinal.mappers.TeamMapper;
-import com.cooksys.groupfinal.mappers.FullUserMapper;
 import com.cooksys.groupfinal.repositories.CompanyRepository;
 import com.cooksys.groupfinal.repositories.TeamRepository;
 import com.cooksys.groupfinal.services.CompanyService;
@@ -34,13 +31,15 @@ import lombok.RequiredArgsConstructor;
 public class CompanyServiceImpl implements CompanyService {
 	
 	private final CompanyRepository companyRepository;
+	private final CompanyMapper companyMapper;
 	private final TeamRepository teamRepository;
 	private final UserRepository userRepository;
 	private final FullUserMapper fullUserMapper;
 	private final AnnouncementMapper announcementMapper;
 	private final TeamMapper teamMapper;
 	private final ProjectMapper projectMapper;
-	
+	private final UserRepository userRepository;
+
 	private Company findCompany(Long id) {
         Optional<Company> company = companyRepository.findById(id);
         if (company.isEmpty()) {
@@ -94,6 +93,63 @@ public class CompanyServiceImpl implements CompanyService {
 		return projectMapper.entitiesToDtos(filteredProjects);
 	}
 
+	@Override
+	public CompanyDto createCompany(CompanyDto companyDto) {
+		if(companyDto.getName() == null || companyDto.getName().isEmpty()){
+			throw new BadRequestException("Company name is required");
+		}
+
+		Company company = new Company();
+		company.setName(companyDto.getName());
+		company.setDescription(companyDto.getDescription());
+
+		companyRepository.saveAndFlush(company);
+
+		return companyMapper.entityToDto(company);
+	}
+
+	@Override
+	public CompanyDto addUserToCompany(Long companyId, Long userId) {
+		Company company = findCompany(companyId);
+
+		Optional<User> userOptional = userRepository.findById(userId);
+		if(userOptional.isEmpty()){
+			throw new NotFoundException("User with id: " + userId + "not found!");
+		}
+
+		User user = userOptional.get();
+		company.getEmployees().add(user);
+
+		companyRepository.saveAndFlush(company);
+
+		return companyMapper.entityToDto(company);
+	}
+
+	@Override
+	public CompanyDto editCompanyInfo(Long companyId, CompanyDto companyDto) {
+		Company company = findCompany(companyId);
+
+		if (companyDto.getName() != null && !companyDto.getName().isEmpty()) {
+			company.setName(companyDto.getName());
+		}
+
+		if (companyDto.getDescription() != null) {
+			company.setDescription(companyDto.getDescription());
+		}
+
+		return companyMapper.entityToDto(companyRepository.saveAndFlush(company));
+	}
+
+	@Override
+	public CompanyDto getCompanyById(long companyId) {
+		Company company = findCompany(companyId);
+		return companyMapper.entityToDto(company);
+	}
+
+	@Override
+	public List<CompanyDto> getAllCompanies() {
+		return new ArrayList<>(companyMapper.entitiesToDtos(new HashSet<>(companyRepository.findAll())));
+	}
 	@Override
 	public TeamDto removeUser(Long companyId, Long teamId, Long userId) {
 		Optional<Company> companyOptional = companyRepository.findById(companyId);

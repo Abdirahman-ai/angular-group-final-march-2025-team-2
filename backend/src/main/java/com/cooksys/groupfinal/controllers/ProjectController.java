@@ -1,11 +1,14 @@
 package com.cooksys.groupfinal.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.cooksys.groupfinal.dtos.ProjectDto;
+import org.springframework.web.bind.annotation.*;
 
 import com.cooksys.groupfinal.services.ProjectService;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/projects")
@@ -13,5 +16,23 @@ import lombok.RequiredArgsConstructor;
 public class ProjectController {
 	
 	private final ProjectService projectService;
+
+	@GetMapping("/team/{teamID}")
+	@CrossOrigin(origins = "*")
+	public Set<ProjectDto> getAllProjects(@PathVariable long teamID){
+		return projectService.getAllProjects(teamID);
+	}
+
+	@PostMapping("/team/{teamId}")
+	@CrossOrigin(origins = "*")
+	public ProjectDto createProject(@PathVariable Long teamId, @RequestBody ProjectDto projectDto) {
+		return projectService.createProject(teamId, projectDto);
+	}
+
+	@PutMapping("/{projectID}")
+	@CrossOrigin(origins = "*")
+	public ProjectDto updateProject(@PathVariable long projectID, @RequestBody ProjectDto projectDto) {
+		return projectService.updateProject(projectID, projectDto);
+	}
 
 }
