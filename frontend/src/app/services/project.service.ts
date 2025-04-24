@@ -15,4 +15,13 @@ export class ProjectService {
   getProjectsForTeam(teamId: number): Observable<Project[]> {
     return this.http.get<Project[]>(`${this.baseUrl}/projects/team/${teamId}`);
   }
+
+  createProject(teamId: number, project: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/projects/team/${teamId}`, project);
+  }
+
+  updateProject(projectId: number, updatedProject: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/projects/${projectId}`, updatedProject);
+  }
+  
 }

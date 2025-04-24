@@ -5,7 +5,7 @@
     <h2 class="page-title">Projects for Team {{ teamId }}</h2>
 
     <div class="projects-header">
-        <button class="new-button" (click)="createProject()">New</button>
+        <button class="new-button" (click)="openCreateForm()">New</button>
     </div>
 
     <div *ngFor="let project of projects" class="project-row">
@@ -21,5 +21,49 @@
             </div>
         </div>
         <button class="edit-button" (click)="editProject(project)">Edit</button>
+    </div>
+</div>
+
+<div class="modal-overlay" *ngIf="showCreateForm">
+    <div class="modal">
+        <div class="modal-header">
+            <span>Create Project</span>
+            <span class="close-button" (click)="closeCreateForm()">&#x2715;</span>
+        </div>
+
+        <div class="modal-body">
+            <label>Project Name</label>
+            <input type="text" [(ngModel)]="newProject.name" />
+
+            <label>Description</label>
+            <input type="text" [(ngModel)]="newProject.description" />
+
+            <button class="submit-button" (click)="submitNewProject()">Submit</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" *ngIf="showEditModal">
+    <div class="modal" *ngIf="editedProject">
+        <div class="modal-header">
+            <span>Edit Project</span>
+            <span class="close-button" (click)="showEditModal = false">&#x2715;</span>
+        </div>
+
+        <div class="modal-body">
+            <label>Project Name</label>
+            <input type="text" [(ngModel)]="editedProject!.name" placeholder="Project Name" />
+
+            <label>Description</label>
+            <input type="text" [(ngModel)]="editedProject!.description" placeholder="Description" />
+
+            <label>Active?</label>
+            <select [(ngModel)]="editedProject.active">
+                <option [ngValue]="true">Yes</option>
+                <option [ngValue]="false">No</option>
+            </select>
+
+            <button class="submit-button" (click)="saveEditedProject()">Save</button>
+        </div>
     </div>
 </div>

@@ -11,7 +11,12 @@ import { Location } from '@angular/common';
 })
 export class ProjectsComponent {
   teamId!: number;
-  projects: any[] = [];
+  projects: Project[] = [];
+  showCreateForm = false;
+  newProject = { name: '', description: '', active: true };
+
+  showEditModal = false;
+  editedProject: Project | null = null;
 
   constructor(
     private route: ActivatedRoute, 
@@ -32,18 +37,50 @@ export class ProjectsComponent {
   }
 
   createProject(): void {
-    // Logic for adding new project, e.g., opening a modal
-    console.log('Creating new project...');
+    this.openCreateForm();
   }
 
   editProject(project: Project): void {
-    // Logic for editing project, e.g., navigating to edit view or opening modal
-    console.log('Editing project:', project);
+    this.editedProject = { ...project };
+    this.showEditModal = true;
+  }
+
+  saveEditedProject(): void {
+    if (!this.editedProject?.id) return;
+
+    this.projectService.updateProject(this.editedProject.id, this.editedProject).subscribe({
+      next: () => {
+        this.showEditModal = false;
+        this.loadProjects();
+      },
+      error: (err) => console.error('Error updating project:', err)
+    });
   }
 
   goBack(): void {
     this.location.back();
   }
 
+  openCreateForm(): void {
+    this.showCreateForm = true;
+  }
 
+  closeCreateForm(): void {
+    this.showCreateForm = false;
+    this.newProject = { name: '', description: '', active: true };
+  }
+
+  submitNewProject(): void {
+    this.projectService.createProject(this.teamId, {
+      name: this.newProject.name,
+      description: this.newProject.description,
+      active: true
+    }).subscribe({
+      next: (project) => {
+        this.projects.push(project);
+        this.closeCreateForm();
+      },
+      error: (err) => console.error('Failed to create project:', err)
+    });
+  }
 }
