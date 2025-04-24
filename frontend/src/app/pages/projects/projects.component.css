@@ -1,0 +1,103 @@
+.projects-wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #ffffff;
+  }
+  
+  .page-title {
+    text-align: center;
+    font-size: 2rem;
+    color: #00bfa6;
+    margin-bottom: 1.5rem;
+  }
+  
+  .projects-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+  }
+  
+  .new-button {
+    background-color: #1BA098;
+    color: #fff;
+    padding: 0.4rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .new-button:hover {
+    background-color: #148c82;
+  }
+  
+  .project-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #a49382;
+    padding: 1rem 0;
+  }
+  
+  .project-info {
+    flex-grow: 1;
+  }
+  
+  .project-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .status {
+    font-size: 0.8rem;
+    font-style: italic;
+  }
+  
+  .status.active {
+    color: #44d17f;
+  }
+  
+  .status.inactive {
+    color: #d97c7c;
+  }
+  
+  .project-description {
+    font-size: 0.9rem;
+    color: #ccc;
+    margin-top: 0.25rem;
+  }
+  
+  .edit-button {
+    background-color: #e3bfa3;
+    color: #000;
+    border: none;
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  
+  .edit-button:hover {
+    background-color: #d4a884;
+  }
+
+  .back-button {
+    display: inline-block;
+    color: #1BA098;
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .back-button:hover {
+    color: #16a085;
+  }
+  
+  

@@ -1,0 +1,25 @@
+<div class="projects-wrapper">
+    <div>
+        <span class="back-button" (click)="goBack()">&lt; Back</span>
+    </div>
+    <h2 class="page-title">Projects for Team {{ teamId }}</h2>
+
+    <div class="projects-header">
+        <button class="new-button" (click)="createProject()">New</button>
+    </div>
+
+    <div *ngFor="let project of projects" class="project-row">
+        <div class="project-info">
+            <div class="project-title">
+                {{ project.name }}
+                <span class="status" [ngClass]="{ 'active': project.active, 'inactive': !project.active }">
+                    {{ project.active ? 'Active' : 'Inactive' }}
+                </span>
+            </div>
+            <div class="project-description">
+                {{ project.description }}
+            </div>
+        </div>
+        <button class="edit-button" (click)="editProject(project)">Edit</button>
+    </div>
+</div>

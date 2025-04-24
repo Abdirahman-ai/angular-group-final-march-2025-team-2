@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/company")
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class CompanyController {
 	

@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/announcements")
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class AnnouncementController {
 	

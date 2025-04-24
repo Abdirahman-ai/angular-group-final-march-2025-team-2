@@ -1,0 +1,103 @@
+.teams-page {
+    padding: 2rem;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .page-title {
+    text-align: center;
+    font-size: 2rem;
+    color: #00bfa6;
+    margin-bottom: 1.5rem;
+  }
+  
+  .teams-container {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .teams-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    justify-items: center;
+  }
+  
+  .team-card {
+    background-color: #0B2D45;
+    color: white;
+    border-radius: 12px;
+    width: 220px;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  .team-card:hover {
+    transform: translateY(-4px);
+  }
+  
+  .team-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .team-body {
+    margin-top: 0.5rem;
+  }
+  
+  .members-title {
+    font-size: 0.9rem;
+    color: #ccc;
+    margin-bottom: 0.25rem;
+  }
+  
+  .member-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  
+  .member {
+    background-color: #1BA098;
+    color: #0f0f0f;
+    border-radius: 20px;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+  
+  .new-team {
+    border: 2px dashed #f4c27f;
+    color: #f4c27f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .new-team:hover {
+    background-color: rgba(244, 194, 127, 0.1);
+  }
+  
+  .plus {
+    font-size: 2rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  .new-label {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+  }
+  

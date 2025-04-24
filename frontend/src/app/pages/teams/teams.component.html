@@ -1,0 +1,36 @@
+<div class="teams-container">
+    <h2 class="page-title">Teams</h2>
+  
+    <div class="teams-grid">
+      <!-- Clickable Team Card -->
+      <div 
+        class="team-card" 
+        *ngFor="let team of teams" 
+        [routerLink]="['/teams', team.id, 'projects']" 
+        style="cursor: pointer;"
+      >
+        <div class="team-header">
+          <span class="team-name">{{ team.name }}</span>
+          <span class="project-count"># of Projects: {{ team.projects?.length || 0 }}</span>
+        </div>
+  
+        <div class="team-body">
+          <p class="members-title">Members</p>
+          <div class="member-tags">
+            <span 
+              class="member" 
+              *ngFor="let user of team.teammates || []">
+              {{ user?.profile?.firstName || 'Unknown' }} {{ user?.profile?.lastName?.charAt(0) || '?' }}.
+            </span>
+          </div>
+        </div>
+      </div>
+  
+      <!-- New Team Card -->
+      <div class="team-card new-team" (click)="createTeam()">
+        <div class="plus">+</div>
+        <p>New Team</p>
+      </div>
+    </div>
+  </div>
+  
