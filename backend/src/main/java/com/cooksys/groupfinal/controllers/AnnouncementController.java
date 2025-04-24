@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/announcements")
-@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
 public class AnnouncementController {
