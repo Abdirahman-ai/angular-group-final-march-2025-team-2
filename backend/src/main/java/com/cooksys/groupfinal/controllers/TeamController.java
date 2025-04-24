@@ -36,6 +36,11 @@ public class TeamController {
 		return teamService.removeUser(teamId, userId);
 	}
 
+	@GetMapping("/{teamId}")
+	public TeamDto getTeamById(@PathVariable Long teamId){
+		return teamService.getTeamById(teamId);
+	}
+
 	@PutMapping("/{teamId}")
 	public TeamDto updateTeam(@PathVariable Long teamId, @RequestBody TeamDto teamDto) {
 		return teamService.updateTeam(teamId, teamDto);

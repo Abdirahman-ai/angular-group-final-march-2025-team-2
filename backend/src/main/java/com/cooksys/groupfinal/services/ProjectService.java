@@ -12,4 +12,6 @@ public interface ProjectService {
     ProjectDto updateProject(long projectID, ProjectDto projectDto);
 
     Set<ProjectDto> getAllProjects(long teamID);
+
+    void deleteProject(Long projectId);
 }

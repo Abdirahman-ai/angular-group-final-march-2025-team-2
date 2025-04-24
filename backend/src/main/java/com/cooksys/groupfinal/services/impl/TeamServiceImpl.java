@@ -146,4 +146,12 @@ public class TeamServiceImpl implements TeamService {
         }
         teamRepository.deleteById(teamId);
     }
+
+    @Override
+    public TeamDto getTeamById(Long teamId) {
+        if(!teamRepository.existsById(teamId)){
+            throw new NotFoundException("Team not found with Id" + teamId);
+        }
+        return teamMapper.entityToDto(teamRepository.findById(teamId).get());
+    }
 }

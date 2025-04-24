@@ -39,4 +39,8 @@ export class TeamService {
   getProjectsForTeam(teamId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/projects/team/${teamId}`);
   }
+
+  getTeamById(teamId: number): Observable<Team> {
+    return this.http.get<Team>(`${this.baseUrl}/team/${teamId}`);
+  }
 }

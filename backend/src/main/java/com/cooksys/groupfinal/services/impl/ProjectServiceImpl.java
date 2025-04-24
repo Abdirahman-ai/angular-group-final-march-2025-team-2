@@ -4,6 +4,7 @@ import com.cooksys.groupfinal.dtos.ProjectDto;
 import com.cooksys.groupfinal.entities.Project;
 import com.cooksys.groupfinal.entities.Team;
 import com.cooksys.groupfinal.exceptions.BadRequestException;
+import com.cooksys.groupfinal.exceptions.NotFoundException;
 import com.cooksys.groupfinal.mappers.ProjectMapper;
 import com.cooksys.groupfinal.repositories.ProjectRepository;
 import com.cooksys.groupfinal.repositories.TeamRepository;
@@ -69,5 +70,13 @@ public class ProjectServiceImpl implements ProjectService {
         Set<Project> projects = teamOpt.get().getProjects();
 
         return projectMapper.entitiesToDtos((projects));
+    }
+
+    @Override
+    public void deleteProject(Long projectId) {
+        if(!projectRepository.existsById(projectId)){
+            throw new NotFoundException("Project not found");
+        }
+        projectRepository.deleteById(projectId);
     }
 }

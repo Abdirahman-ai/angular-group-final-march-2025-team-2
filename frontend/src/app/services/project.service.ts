@@ -23,5 +23,11 @@ export class ProjectService {
   updateProject(projectId: number, updatedProject: any): Observable<any> {
     return this.http.put(`${this.baseUrl}/projects/${projectId}`, updatedProject);
   }
+
+  deleteProject(projectId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/projects/${projectId}`);
+  }
+
+  
   
 }

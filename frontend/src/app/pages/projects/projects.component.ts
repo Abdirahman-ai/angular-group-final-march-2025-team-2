@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { Location } from '@angular/common';
+import { Team } from 'src/app/models/team.model'
+import { TeamService } from 'src/app/services/team.service';
 
 @Component({
   selector: 'app-projects',
@@ -13,6 +15,7 @@ export class ProjectsComponent {
   teamId!: number;
   projects: Project[] = [];
   showCreateForm = false;
+  teamName: string = '';
   newProject = { name: '', description: '', active: true };
 
   showEditModal = false;
@@ -20,19 +23,29 @@ export class ProjectsComponent {
 
   constructor(
     private route: ActivatedRoute, 
-    private projectService: ProjectService, 
+    private projectService: ProjectService,
+    private teamService: TeamService, 
     private location: Location
   ){}
 
   ngOnInit(): void {
     this.teamId = Number(this.route.snapshot.paramMap.get('teamId'));
     this.loadProjects();
+    this.loadTeamName();
+    console.log(this.teamName);
   }
 
   loadProjects(): void {
     this.projectService.getProjectsForTeam(this.teamId).subscribe({
       next: (data) => this.projects = data,
       error: (err) => console.error('Error loading projects:', err)
+    });
+  }
+
+  loadTeamName(): void {
+    this.teamService.getTeamById(this.teamId).subscribe({
+      next: (team: Team) => this.teamName = team.name,
+      error: (err) => console.error('Error fetching team:', err)
     });
   }
 
@@ -82,5 +95,17 @@ export class ProjectsComponent {
       },
       error: (err) => console.error('Failed to create project:', err)
     });
+  }
+
+  deleteProject(projectId: number): void {
+    if (confirm('Are you sure you want to delete this project?')) {
+      this.projectService.deleteProject(projectId).subscribe({
+        next: () => {
+          this.showEditModal = false;
+          this.loadProjects();
+        },
+        error: (err) => console.error('Error deleting project:', err)
+      });
+    }
   }
 }

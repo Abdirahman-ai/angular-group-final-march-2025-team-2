@@ -2,7 +2,7 @@
     <div>
         <span class="back-button" (click)="goBack()">&lt; Back</span>
     </div>
-    <h2 class="page-title">Projects for Team {{ teamId }}</h2>
+    <h2 class="page-title">Projects for Team {{ teamName }}</h2>
 
     <div class="projects-header">
         <button class="new-button" (click)="openCreateForm()">New</button>
@@ -64,6 +64,8 @@
             </select>
 
             <button class="submit-button" (click)="saveEditedProject()">Save</button>
+
+            <button class="delete-project-button" (click)="deleteProject(editedProject!.id)">Delete Project</button>
         </div>
     </div>
 </div>
