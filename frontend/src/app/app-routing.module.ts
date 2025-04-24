@@ -5,7 +5,7 @@ import { SelectCompanyComponent } from './pages/select-company/select-company.co
 import { AnnouncementsComponent } from './components/announcements/Announcements.component';
 import { TeamsComponent } from './pages/teams/teams.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
-import { UsersComponent } from './pages/users/users.component';
+// import { UsersComponent } from './pages/users/users.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'announcements', component: AnnouncementsComponent },
   { path: 'teams', component: TeamsComponent },
   { path: 'teams/:teamId/projects', component: ProjectsComponent },
-  { path: 'users', component: UsersComponent },
+  // { path: 'users', component: UsersComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
 
