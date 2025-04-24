@@ -1,0 +1,17 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { BasicUserDto } from '../models/basic-user.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UserService {
+  private baseUrl = 'http://localhost:8080/company'; 
+
+  constructor(private http: HttpClient) {}
+
+  getUsers(companyId: number): Observable<BasicUserDto[]> {
+    return this.http.get<BasicUserDto[]>(`${this.baseUrl}/${companyId}/users`);
+  }
+}

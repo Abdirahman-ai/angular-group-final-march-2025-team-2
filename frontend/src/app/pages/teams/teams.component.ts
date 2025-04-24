@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Team } from 'src/app/models/team.model';
 import { TeamService } from 'src/app/services/team.service';
+import { UserService } from '../../services/user.service';
+import { BasicUserDto } from 'src/app/models/basic-user.model';
 
 @Component({
   selector: 'app-teams',
@@ -11,18 +13,29 @@ import { TeamService } from 'src/app/services/team.service';
 export class TeamsComponent {
   teams: Team[] = [];
   companyId!: number;
+  showCreateForm = false;
+  selectedUser: BasicUserDto | null = null;
 
-  constructor(private teamService: TeamService, private router: Router){}
+  newTeam = {
+    name: '',
+    description: '',
+    teammates: [] as BasicUserDto[]
+  };
+
+  allUsers: BasicUserDto[] = [];
+
+  constructor(
+    private teamService: TeamService,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    const storedUser = localStorage.getItem('user');
     const storedCompanyId = localStorage.getItem('companyId');
-
-    if (storedUser && storedCompanyId) {
+    if (storedCompanyId) {
       this.companyId = Number(storedCompanyId);
       this.loadTeams();
-    } else {
-      console.error('Missing user or companyId in localStorage');
+      this.loadUsers();
     }
   }
 
@@ -30,37 +43,19 @@ export class TeamsComponent {
     this.teamService.getTeams(this.companyId).subscribe({
       next: (teams) => {
         this.teams = teams;
-  
         this.teams.forEach((team) => {
           this.teamService.getProjectsForTeam(team.id).subscribe({
-            next: (projects) => {
-              (team as any).projects = projects;
-            },
-            error: (err) => {
-              console.error(`Failed to load projects for team ${team.id}:`, err);
-              (team as any).projects = []; 
-            }
+            next: (projects) => (team as any).projects = projects,
+            error: () => (team as any).projects = []
           });
         });
-      },
-      error: (err) => {
-        console.error('Failed to load teams:', err);
       }
     });
-  }  
+  }
 
-  createTeam(): void {
-    const newTeam: Team = {
-      name: `Team${this.teams.length + 1}`,
-      description: '',
-      teammates: [],
-      projects: [], 
-      id: 0 
-    };
-
-    this.teamService.createTeam(this.companyId, newTeam).subscribe({
-      next: () => this.loadTeams(),
-      error: (err) => console.error('Error creating team:', err)
+  loadUsers(): void {
+    this.userService.getUsers(this.companyId).subscribe({
+      next: (users: BasicUserDto[]) => this.allUsers = users
     });
   }
 
@@ -68,4 +63,40 @@ export class TeamsComponent {
     this.router.navigate(['/projects', teamId]);
   }
 
+  openCreateForm(): void {
+    this.showCreateForm = true;
+    this.newTeam = { name: '', description: '', teammates: [] };
+  }
+
+  closeCreateForm(): void {
+    this.showCreateForm = false;
+  }
+
+  removeTeammate(userId: number): void {
+    this.newTeam.teammates = this.newTeam.teammates.filter(u => u.id !== userId);
+  }
+
+  submitNewTeam(): void {
+    const team: Team = {
+      name: this.newTeam.name,
+      description: this.newTeam.description,
+      teammates: this.newTeam.teammates,
+      projects: [],
+      id: 0
+    };
+
+    this.teamService.createTeam(this.companyId, team).subscribe({
+      next: () => {
+        this.closeCreateForm();
+        this.loadTeams();
+      }
+    });
+  }
+
+  addTeammate(user: BasicUserDto | null): void {
+    if (user && !this.newTeam.teammates.find(u => u.id === user.id)) {
+      this.newTeam.teammates.push(user);
+      this.selectedUser = null; 
+    }
+  }
 }
