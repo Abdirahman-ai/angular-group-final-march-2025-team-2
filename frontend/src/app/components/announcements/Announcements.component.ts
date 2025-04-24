@@ -56,13 +56,13 @@ export class AnnouncementsComponent implements OnInit {
       companyId: this.companyId
     };
 
-    this.announcementService.createAnnouncement(payload).subscribe({
+    this.announcementService.createAnnouncement(this.companyId, payload).subscribe({
       next: () => {
         this.showForm = false;
         this.newAnnouncement = { title: '', message: '' };
         this.loadAnnouncements();
       },
       error: (err) => console.error('Error creating announcement:', err)
-    });
+    });    
   }
 }
