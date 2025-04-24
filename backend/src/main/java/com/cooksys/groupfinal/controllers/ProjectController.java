@@ -10,10 +10,12 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.Set;
 
+
 @RestController
 @RequestMapping("/projects")
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class ProjectController {
 	
 	private final ProjectService projectService;
@@ -24,13 +26,11 @@ public class ProjectController {
 	}
 
 	@PostMapping("/team/{teamId}")
-	@CrossOrigin(origins = "*")
 	public ProjectDto createProject(@PathVariable Long teamId, @RequestBody ProjectDto projectDto) {
 		return projectService.createProject(teamId, projectDto);
 	}
 
 	@PutMapping("/{projectID}")
-	@CrossOrigin(origins = "*")
 	public ProjectDto updateProject(@PathVariable long projectID, @RequestBody ProjectDto projectDto) {
 		return projectService.updateProject(projectID, projectDto);
 	}

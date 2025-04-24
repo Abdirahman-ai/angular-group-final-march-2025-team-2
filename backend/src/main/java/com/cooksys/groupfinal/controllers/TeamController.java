@@ -15,19 +15,18 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/team")
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class TeamController {
 	
 	private final TeamService teamService;
 
 
 	@PostMapping("/{companyId}/teams")
-	@CrossOrigin(origins = "*")
 	public TeamDto createTeam(@PathVariable Long companyId, @RequestBody TeamDto teamDto) {
 		return teamService.createTeam(companyId, teamDto);
 	}
 
 	@PostMapping("/{teamId}/add-user/{userId}")
-	@CrossOrigin(origins = "*")
 	public TeamDto addUserToTeam(@PathVariable Long teamId, @PathVariable Long userId) {
 		return teamService.addUserToTeam(teamId, userId);
 	}
