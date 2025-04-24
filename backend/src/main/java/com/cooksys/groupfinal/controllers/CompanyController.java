@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/company")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class CompanyController {
 	
 	private final CompanyService companyService;
@@ -41,26 +42,22 @@ public class CompanyController {
 		return companyService.getAllProjects(companyId, teamId);
 	}
 
-    @PostMapping
-    @CrossOrigin(origins = "*")  // admin only
+    @PostMapping// admin only
     public CompanyDto createCompany(@RequestBody CompanyDto companyDto) {
         return companyService.createCompany(companyDto);
     }
 
     @PostMapping("/{companyId}/add-user/{userId}")
-    @CrossOrigin(origins = "*")
     public CompanyDto addUserToCompany(@PathVariable Long companyId, @PathVariable Long userId) {
         return companyService.addUserToCompany(companyId, userId);
     }
 
     @PutMapping("/{companyId}")
-    @CrossOrigin(origins = "*")
     public CompanyDto editCompanyInfo(@PathVariable Long companyId, @RequestBody CompanyDto companyDto){
         return companyService.editCompanyInfo(companyId, companyDto);
     }
 
     @GetMapping
-    @CrossOrigin(origins = "*")
     public List<CompanyDto> getAllCompanies(){
         return companyService.getAllCompanies();
     }

@@ -16,36 +16,32 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
-	
+
 	private final UserService userService;
-	
+
 	@PostMapping("/login")
-	@CrossOrigin(origins="*")
     public FullUserDto login(@RequestBody CredentialsDto credentialsDto) {
         return userService.login(credentialsDto);
     }
 
     @GetMapping("/{id}")
-    @CrossOrigin(origins = "*")
     public FullUserDto getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
     @GetMapping
-    @CrossOrigin(origins = "*")
     public List<FullUserDto> getAllUsers(){
         return userService.getAllUsers();
     }
 
     @PostMapping
-    @CrossOrigin(origins = "*")
     public FullUserDto createUser(@RequestBody UserRequestDto userRequestDto) {
         return userService.createUser(userRequestDto);
     }
 
     @PutMapping("/{id}")
-    @CrossOrigin(origins = "*")
     public FullUserDto updateUser(@PathVariable Long id, @RequestBody UserRequestDto userRequestDto) {
         return userService.updateUser(id, userRequestDto);
     }
@@ -54,5 +50,4 @@ public class UserController {
     public FullUserDto updateUserStatus(@PathVariable Long id, @RequestBody StatusUpdateDto statusUpdateDto){
         return userService.updateUserStatus(id, statusUpdateDto.getStatus());
     }
-
 }
