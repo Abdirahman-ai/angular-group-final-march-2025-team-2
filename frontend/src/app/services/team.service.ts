@@ -16,6 +16,14 @@ export class TeamService {
     return this.http.post<Team>(`${this.baseUrl}/team/${companyId}/teams`, team);
   }
 
+  updateTeam(teamId: number, team: Partial<Team>): Observable<Team> {
+    return this.http.put<Team>(`${this.baseUrl}/team/${teamId}`, team);
+  }
+
+  deleteTeam(teamId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/team/${teamId}`);
+  }
+
   addUserToTeam(teamId: number, userId: number): Observable<Team> {
     return this.http.post<Team>(`${this.baseUrl}/team/${teamId}/add-user/${userId}`, {});
   }

@@ -8,4 +8,8 @@ public interface TeamService {
     TeamDto createTeam(Long companyId, TeamDto teamDto);
 
     TeamDto addUserToTeam(Long teamId, Long userId);
+
+    TeamDto updateTeam(Long teamId, TeamDto teamDto);
+
+    void deleteTeam(Long teamId);
 }

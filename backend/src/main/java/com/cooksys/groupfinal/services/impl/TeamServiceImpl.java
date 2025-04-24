@@ -107,4 +107,43 @@ public class TeamServiceImpl implements TeamService {
 
         return teamMapper.entityToDto(teamRepository.saveAndFlush(team.get()));
     }
+
+    @Override
+    public TeamDto updateTeam(Long teamId, TeamDto teamDto) {
+        Optional<Team> teamOptional = teamRepository.findById(teamId);
+
+        if(teamOptional.isEmpty()){
+            throw new NotFoundException("The team is not found");
+        }
+
+        Team exisingTeam = teamOptional.get();
+
+        exisingTeam.setName(teamDto.getName());
+        exisingTeam.setDescription(teamDto.getDescription());
+
+        if (teamDto.getTeammates() != null) {
+            Set<User> updatedTeammates = new HashSet<>();
+
+            for (BasicUserDto userDto : teamDto.getTeammates()) {
+                if (userDto.getId() != null) {
+                    Optional<User> userOpt = userRepository.findById(userDto.getId());
+                    if (userOpt.isPresent()) {
+                        updatedTeammates.add(userOpt.get());
+                    }
+                }
+            }
+
+            exisingTeam.setTeammates(updatedTeammates);
+        }
+        Team updatedTeam = teamRepository.save(exisingTeam);
+        return teamMapper.entityToDto(updatedTeam);
+    }
+
+    @Override
+    public void deleteTeam(Long teamId) {
+        if (!teamRepository.existsById(teamId)) {
+            throw new NotFoundException("Team not found with ID: " + teamId);
+        }
+        teamRepository.deleteById(teamId);
+    }
 }

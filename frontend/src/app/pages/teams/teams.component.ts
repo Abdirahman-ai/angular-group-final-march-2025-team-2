@@ -15,6 +15,8 @@ export class TeamsComponent {
   companyId!: number;
   showCreateForm = false;
   selectedUser: BasicUserDto | null = null;
+  isEditMode = false;
+  editedTeamId: number | null = null;
 
   newTeam = {
     name: '',
@@ -60,16 +62,31 @@ export class TeamsComponent {
   }
 
   goToProjects(teamId: number): void {
-    this.router.navigate(['/projects', teamId]);
+    this.router.navigate(['/teams', teamId, 'projects']);
   }
 
   openCreateForm(): void {
+    this.isEditMode = false;
     this.showCreateForm = true;
+    this.editedTeamId = null;
     this.newTeam = { name: '', description: '', teammates: [] };
+  }
+
+  openEditForm(team: Team): void {
+    this.isEditMode = true;
+    this.showCreateForm = true;
+    this.editedTeamId = team.id;
+    this.newTeam = {
+      name: team.name,
+      description: team.description,
+      teammates: [...team.teammates]
+    };
   }
 
   closeCreateForm(): void {
     this.showCreateForm = false;
+    this.editedTeamId = null;
+    this.isEditMode = false;
   }
 
   removeTeammate(userId: number): void {
@@ -82,15 +99,36 @@ export class TeamsComponent {
       description: this.newTeam.description,
       teammates: this.newTeam.teammates,
       projects: [],
-      id: 0
+      id: this.editedTeamId ?? 0
     };
 
-    this.teamService.createTeam(this.companyId, team).subscribe({
-      next: () => {
-        this.closeCreateForm();
-        this.loadTeams();
-      }
-    });
+    if (this.isEditMode && this.editedTeamId !== null) {
+      this.teamService.updateTeam(this.editedTeamId, team).subscribe({
+        next: () => {
+          this.closeCreateForm();
+          this.loadTeams();
+        }
+      });
+    } else {
+      this.teamService.createTeam(this.companyId, team).subscribe({
+        next: () => {
+          this.closeCreateForm();
+          this.loadTeams();
+        }
+      });
+    }
+  }
+
+  deleteTeam(teamId: number): void {
+    if (confirm('Are you sure you want to delete this team?')) {
+      this.teamService.deleteTeam(teamId).subscribe({
+        next: () => {
+          this.loadTeams();
+          this.closeCreateForm(); 
+        },
+        error: (err) => console.error('Failed to delete team:', err)
+      });
+    }
   }
 
   addTeammate(user: BasicUserDto | null): void {
