@@ -16,7 +16,7 @@ export class AnnouncementService {
     return this.http.get<Announcement[]>(`${this.baseUrl}/company/${companyId}/announcements`);
   }
 
-  createAnnouncement(payload: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/announcement`, payload);
+  createAnnouncement(companyId: number, payload: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/announcements/company/${companyId}`, payload);
   }  
 }
