@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AnnouncementService } from '../../services/announcement.service';
 import { Announcement } from 'src/app/models/announcement.model';
+import { NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-announcements',
@@ -27,6 +28,12 @@ export class AnnouncementsComponent implements OnInit {
   ) {
     const nav = this.router.getCurrentNavigation();
     this.companyId = nav?.extras?.state?.['companyId'];
+  
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd && this.router.url === '/announcements') {
+        this.loadAnnouncements?.();
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -34,6 +41,13 @@ export class AnnouncementsComponent implements OnInit {
     if (storedUser) {
       this.user = JSON.parse(storedUser);
       this.isAdmin = this.user?.admin === true;
+    }
+
+    if (!this.companyId) {
+      const storedCompanyId = localStorage.getItem('companyId');
+      if (storedCompanyId) {
+        this.companyId = +storedCompanyId;
+      }
     }
 
     if (this.companyId) {

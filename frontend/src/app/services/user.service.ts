@@ -8,12 +8,12 @@ import { FullUser } from '../models/user.model';
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl = 'http://localhost:8080/company'; 
+  private baseUrl = 'http://localhost:8080'; 
 
   constructor(private http: HttpClient) {}
 
   getUsers(companyId: number): Observable<BasicUserDto[]> {
-    return this.http.get<BasicUserDto[]>(`${this.baseUrl}/${companyId}/users`);
+    return this.http.get<BasicUserDto[]>(`${this.baseUrl}/company/${companyId}/users`);
   }
 
   getUsersByCompany(companyId: number): Observable<FullUser[]> {

@@ -11,7 +11,7 @@ import { AnnouncementsComponent } from './components/announcements/Announcements
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { TeamsComponent } from './pages/teams/teams.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
-// import { UsersComponent } from './pages/users/users.component';
+import { UsersComponent } from './pages/users/users.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,7 @@ import { ProjectsComponent } from './pages/projects/projects.component';
     NavbarComponent,
     TeamsComponent,
     ProjectsComponent,
-    // UsersComponent
+    UsersComponent
   ],
   imports: [
     BrowserModule,
