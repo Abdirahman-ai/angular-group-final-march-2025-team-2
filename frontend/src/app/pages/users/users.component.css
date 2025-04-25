@@ -4,25 +4,29 @@
     min-height: 100vh;
     padding: 2rem;
     font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
   h1 {
     color: #2ac1a2;
     font-size: 2.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
   }
   
   hr {
     width: 60%;
     border: 1px solid #c9a87c;
-    margin-bottom: 2rem;
+    margin: 0 auto 1.5rem auto;
   }
   
   .actions {
-    width: 90%;
+    width: 60%;
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
   }
   
   .add-user-btn {
