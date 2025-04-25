@@ -6,7 +6,7 @@
       <div class="team-card" *ngFor="let team of teams">
         <div class="team-header">
           <span class="team-name">{{ team.name }}</span>
-          <span class="project-count"># of Projects: {{ team.projects?.length || 0 }}</span>
+          <span class="project-count"># of Projects: {{ team.projects.length || 0 }}</span>
         </div>
   
         <div class="team-body">

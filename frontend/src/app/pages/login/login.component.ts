@@ -20,7 +20,6 @@ export class LoginComponent {
     .subscribe({
       next: (user: any) => {
         localStorage.setItem('user', JSON.stringify(user));
-        alert('Login successful! 🎉');
         this.router.navigate(['/select-company']);
       },
       error: () => {
