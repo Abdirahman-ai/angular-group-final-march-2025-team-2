@@ -19,4 +19,12 @@ export class AnnouncementService {
   createAnnouncement(companyId: number, payload: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/announcements/company/${companyId}`, payload);
   }  
+
+  updateAnnouncement(announcementId: number, payload: any): Observable<any> {
+    return this.http.patch(`${this.baseUrl}/announcements/${announcementId}`, payload);
+  }
+
+  deleteAnnouncement(announcementId: number): Observable<void>{
+    return this.http.delete<void>(`${this.baseUrl}/announcements/${announcementId}`);
+  }
 }

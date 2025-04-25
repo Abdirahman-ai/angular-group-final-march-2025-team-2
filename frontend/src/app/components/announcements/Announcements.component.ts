@@ -12,6 +12,7 @@ import { NavigationEnd } from '@angular/router';
 export class AnnouncementsComponent implements OnInit {
   companyId!: number;
   announcements: Announcement[] = [];
+  editingAnnouncement: Announcement | null = null;
 
   showForm = false;
   newAnnouncement = {
@@ -28,7 +29,7 @@ export class AnnouncementsComponent implements OnInit {
   ) {
     const nav = this.router.getCurrentNavigation();
     this.companyId = nav?.extras?.state?.['companyId'];
-  
+
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd && this.router.url === '/announcements') {
         this.loadAnnouncements?.();
@@ -70,13 +71,48 @@ export class AnnouncementsComponent implements OnInit {
       companyId: this.companyId
     };
 
-    this.announcementService.createAnnouncement(this.companyId, payload).subscribe({
-      next: () => {
-        this.showForm = false;
-        this.newAnnouncement = { title: '', message: '' };
-        this.loadAnnouncements();
-      },
-      error: (err) => console.error('Error creating announcement:', err)
-    });    
+    if (this.editingAnnouncement) {
+      this.announcementService.updateAnnouncement(this.editingAnnouncement.id, payload).subscribe({
+        next: () => {
+          this.resetForm();
+          this.loadAnnouncements();
+        },
+        error: (err) => console.error('Error updating announcement:', err)
+      });
+    }
+    else {
+      this.announcementService.createAnnouncement(this.companyId, payload).subscribe({
+        next: () => {
+          this.showForm = false;
+          this.newAnnouncement = { title: '', message: '' };
+          this.loadAnnouncements();
+        },
+        error: (err) => console.error('Error creating announcement:', err)
+      });
+    }
+  }
+
+  startEdit(ann: Announcement): void {
+    this.editingAnnouncement = { ...ann };
+    this.showForm = true;
+    this.newAnnouncement = {
+      title: ann.title,
+      message: ann.message
+    };
+  }
+
+  resetForm(): void {
+    this.showForm = false;
+    this.editingAnnouncement = null;
+    this.newAnnouncement = { title: '', message: '' };
+  }
+
+  deleteAnnouncement(id: number): void {
+    if (confirm('Are you sure you want to delete this announcement?')) {
+      this.announcementService.deleteAnnouncement(id).subscribe({
+        next: () => this.loadAnnouncements(),
+        error: (err) => console.error('Error deleting announcement:', err)
+      });
+    }
   }
 }
