@@ -14,7 +14,7 @@ export class AppComponent {
   constructor(private router: Router){
     this.router.events.subscribe(event =>{
       if(event instanceof NavigationEnd){
-        this.showNavbar = !['/login', '/select-company'].includes(event.urlAfterRedirects);
+        this.showNavbar = !['/login'].includes(event.urlAfterRedirects);
       }
     });
   }

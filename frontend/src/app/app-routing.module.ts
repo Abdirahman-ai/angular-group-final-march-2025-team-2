@@ -6,14 +6,15 @@ import { AnnouncementsComponent } from './components/announcements/Announcements
 import { TeamsComponent } from './pages/teams/teams.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
 import { UsersComponent } from './pages/users/users.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'select-company', component: SelectCompanyComponent },
-  { path: 'announcements', component: AnnouncementsComponent },
-  { path: 'teams', component: TeamsComponent },
-  { path: 'teams/:teamId/projects', component: ProjectsComponent },
-  { path: 'users', component: UsersComponent },
+  { path: 'select-company', component: SelectCompanyComponent, canActivate: [AuthGuard] },
+  { path: 'announcements', component: AnnouncementsComponent, canActivate: [AuthGuard] },
+  { path: 'teams', component: TeamsComponent, canActivate: [AuthGuard] },
+  { path: 'teams/:teamId/projects', component: ProjectsComponent, canActivate: [AuthGuard] },
+  { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
 
