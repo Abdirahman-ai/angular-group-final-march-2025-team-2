@@ -1,60 +1,61 @@
 <div class="users-page">
-  <h1>Users</h1>
+  <h1>User Registry</h1>
+  <p class="subtitle">A general view of all your members in your organization</p>
   <hr />
+  
+<div class="search-container">
+  <input 
+    type="text"
+    placeholder="Search by name or email..."
+    [(ngModel)]="searchTerm"
+    (input)="onSearch()" />
+</div>
 
-  <!-- Add User Button -->
-  <div class="actions" *ngIf="isAdmin">
-    <button class="add-user-btn" (click)="toggleUserForm()">+ Add User</button>
+  
+<!-- User Table -->
+<div class="user-table bordered">
+  <div class="user-row header">
+    <div>Name</div>
+    <div>Email</div>
+    <div>Active</div>
+    <div>Admin</div>
+    <div>Status</div>
   </div>
 
-  <!-- Admin Create User Form -->
-  <div *ngIf="showUserForm" class="user-form">
-    <input type="text" [(ngModel)]="newUser.firstName" placeholder="First Name" required />
-    <input type="text" [(ngModel)]="newUser.lastName" placeholder="Last Name" required />
-    <input type="email" [(ngModel)]="newUser.email" placeholder="Email" required />
-    <input type="text" [(ngModel)]="newUser.phone" placeholder="Phone" required />
-    <input type="text" [(ngModel)]="newUser.username" placeholder="Username" required />
-    <input type="password" [(ngModel)]="newUser.password" placeholder="Password" required />
+  <div class="user-row" *ngFor="let user of filteredUsers">
+    <div>{{ user.profile.firstName }} {{ user.profile.lastName }}</div>
+    <div>{{ user.profile.email }}</div>
+    <div [ngClass]="user.active ? 'yes' : 'no'">{{ user.active ? 'YES' : 'NO' }}</div>
+    <div [ngClass]="user.admin ? 'yes' : 'no'">{{ user.admin ? 'YES' : 'NO' }}</div>
+    <div [ngClass]="user.status === 'JOINED' ? 'yes' : 'no'">{{ user.status }}</div>
+  </div>  
+</div>
 
-    <label class="admin-toggle">
-      <input type="checkbox" [(ngModel)]="newUser.isAdmin" /> Admin
-    </label>
+<!-- Moved Add User Button Below Table -->
+<div class="add-user-wrapper" *ngIf="isAdmin">
+  <button class="add-user-btn" (click)="toggleUserForm()">+ Add User</button>
+</div>
 
-    <button 
-      class="create-user-btn"
-      [disabled]="!isFormValid()" 
-      (click)="createUser()"
-    >
-      Create
-    </button>
-  </div>
+<!-- Admin Create User Form -->
+<div *ngIf="showUserForm" class="user-form">
+  <input type="text" [(ngModel)]="newUser.firstName" placeholder="First Name" required />
+  <input type="text" [(ngModel)]="newUser.lastName" placeholder="Last Name" required />
+  <input type="email" [(ngModel)]="newUser.email" placeholder="Email" required />
+  <input type="text" [(ngModel)]="newUser.phone" placeholder="Phone" required />
+  <input type="text" [(ngModel)]="newUser.username" placeholder="Username" required />
+  <input type="password" [(ngModel)]="newUser.password" placeholder="Password" required />
 
-  <!-- User Table -->
-  <div class="user-table">
-    <div class="user-row header">
-      <div>Name</div>
-      <div>Email</div>
-      <div>Phone</div>
-      <div>Status</div>
-      <div>Role</div>
-    </div>
+  <label class="admin-toggle">
+    <input type="checkbox" [(ngModel)]="newUser.isAdmin" /> Admin
+  </label>
 
-    <div class="user-row" *ngFor="let user of users">
-      <div>{{ user.profile.firstName }} {{ user.profile.lastName }}</div>
-      <div>{{ user.profile.email }}</div>
-      <div>{{ user.profile.phone }}</div>
-      <div>
-        <span [ngClass]="{
-          'status-joined': user.status === 'JOINED',
-          'status-pending': user.status === 'PENDING'
-        }">
-          {{ user.status }}
-        </span>
-      </div>
-      <div>
-        <span *ngIf="user.admin" class="admin-badge">Admin</span>
-        <span *ngIf="!user.admin">User</span>
-      </div>
-    </div>
-  </div>
+  <button 
+    class="create-user-btn"
+    [disabled]="!isFormValid()" 
+    (click)="createUser()"
+  >
+    Create
+  </button>
+</div>
+
 </div>
