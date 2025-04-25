@@ -13,12 +13,12 @@ export class NavbarComponent implements OnInit {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       this.user = JSON.parse(storedUser);
-      this.isAdmin = this.user.isAdmin === true;
+      this.isAdmin = this.user.admin === true;
     }
   }
 
   logout(): void {
     localStorage.clear();
-    window.location.href = '/login'; // force refresh
+    window.location.href = '/login';
   }
 }
