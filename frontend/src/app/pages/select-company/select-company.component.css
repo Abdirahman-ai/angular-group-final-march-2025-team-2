@@ -1,56 +1,137 @@
 .select-container {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #071e29;
-    font-family: 'Segoe UI', sans-serif;
-    color: #2ac1a2;
-  }
-  
-  h1 {
-    font-size: 3rem;
-    margin-bottom: 2rem;
-  }
-  
-  select {
-    width: 200px;
-    height: 40px;
-    padding: 1rem;
-    font-size: 1.1rem; 
-    border-radius: 10px;
-    border: none;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    color: black;
-    margin-bottom: 1.5rem;
-    text-align: center;
-  }
-    
-  select:invalid {
-    color: #7f57ff;
-    font-weight: bold;
-  }
-      
-  button {
-    padding: 0.6rem 1.5rem;
-    font-size: 1rem;
-    border-radius: 20px;
-    border: 2px solid #2ac1a2;
-    background-color: transparent;
-    color: #2ac1a2;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  
-  button:hover:not(:disabled) {
-    background-color: #2ac1a2;
-    color: white;
-  }
-  
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #071e29;
+  font-family: 'Segoe UI', sans-serif;
+  color: #2ac1a2;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+}
+
+select {
+  width: 200px;
+  height: 40px;
+  padding: 1rem;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  border: none;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  color: black;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+select:invalid {
+  color: #7f57ff;
+  font-weight: bold;
+}
+
+button {
+  padding: 0.6rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 20px;
+  border: 2px solid #2ac1a2;
+  background-color: transparent;
+  color: #2ac1a2;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  background-color: #2ac1a2;
+  color: white;
+}
+
+.add-company-wrapper {
+  margin-top: 1.2rem;
+}
+
+.danger-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.danger-button:hover {
+  background-color: #c0392b;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal {
+  background-color: #0B2D45;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 360px;
+  color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.close-button {
+  cursor: pointer;
+  color: red;
+  font-size: 1.2rem;
+}
+
+.modal-body label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 0.9rem;
+}
+
+.modal-body input,
+.modal-body textarea {
+  width: 100%;
+  padding: 0.4rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+
+.submit-button {
+  background-color: #1BA098;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}

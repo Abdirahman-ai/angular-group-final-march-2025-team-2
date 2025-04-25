@@ -69,4 +69,12 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         announcementRepository.saveAndFlush(newAnnouncement);
         return announcementMapper.entityToDto(newAnnouncement);
     }
+
+    @Override
+    public void deleteAnnouncement(Long announcementId) {
+        if(!announcementRepository.existsById(announcementId)){
+            throw new NotFoundException("Announcement is not found");
+        }
+        announcementRepository.deleteById(announcementId);
+    }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { CompanyService } from 'src/app/services/company.service';
 
 @Component({
   selector: 'app-select-company',
@@ -11,26 +11,36 @@ export class SelectCompanyComponent implements OnInit {
   companies: any[] = [];
   selectedCompanyId: number | null = null;
   currentUser: any = null;
+  isAdmin: boolean = false;
 
-  constructor(private http: HttpClient, private router: Router) {
+  showCreateForm = false;
+  newCompany = {
+    name: '',
+    description: ''
+  };
+
+  constructor(
+    private companyService: CompanyService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
     const rawUser = localStorage.getItem('user');
     if (rawUser) {
       this.currentUser = JSON.parse(rawUser);
+      this.isAdmin = this.currentUser?.admin === true;
     }
+
+    this.companyService.getAllCompanies().subscribe(data => {
+      this.companies = data;
+    });
   }
 
-  ngOnInit(): void {
-    this.http.get<any[]>('http://localhost:8080/company')
-      .subscribe(data => {
-        this.companies = data;
-      });
-  }
-
-  continue() {
+  continue(): void {
     if (this.selectedCompanyId && this.currentUser) {
       localStorage.setItem('companyId', this.selectedCompanyId.toString());
       localStorage.setItem('user', JSON.stringify(this.currentUser));
-      
+
       this.router.navigate(['/announcements'], {
         state: {
           companyId: this.selectedCompanyId,
@@ -38,5 +48,24 @@ export class SelectCompanyComponent implements OnInit {
         }
       });
     }
+  }
+
+  openCompanyForm(): void {
+    this.showCreateForm = true;
+  }
+
+  closeCompanyForm(): void {
+    this.showCreateForm = false;
+    this.newCompany = { name: '', description: '' };
+  }
+
+  createCompany(): void {
+    this.companyService.createCompany(this.newCompany).subscribe({
+      next: (createdCompany) => {
+        this.companies.push(createdCompany);
+        this.closeCompanyForm();
+      },
+      error: (err) => console.error('Failed to create company:', err)
+    });
   }
 }

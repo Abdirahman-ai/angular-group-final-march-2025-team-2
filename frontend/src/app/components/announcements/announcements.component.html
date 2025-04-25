@@ -4,7 +4,7 @@
 
   <!-- Admin-only New Button -->
   <div class="actions" *ngIf="isAdmin">
-    <button (click)="showForm = !showForm">+ New</button>
+    <button class="new-button" (click)="showForm = !showForm">+ New</button>
   </div>
 
   <!-- Admin-only Form -->
@@ -32,6 +32,11 @@
         <span>{{ ann.date | date: 'MMMM d, y' }}</span>
       </div>
       <p>{{ ann.message }}</p>
+
+      <div *ngIf="isAdmin" class="announcement-actions">
+        <button class="edit-button" (click)="startEdit(ann)">Edit</button>
+        <button class="delete-button" (click)="deleteAnnouncement(ann.id)">Delete</button>
+      </div>
     </div>
   </div>
 </div>
