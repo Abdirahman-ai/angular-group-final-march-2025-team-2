@@ -1,0 +1,35 @@
+<div class="select-container">
+  <h1>Select Company</h1>
+
+  <select [(ngModel)]="selectedCompanyId" required>
+    <option value="" disabled selected>Pick an option</option>
+    <option *ngFor="let company of companies" [value]="company.id">
+      {{ company.name }}
+    </option>
+  </select>
+
+  <button [disabled]="!selectedCompanyId" (click)="continue()">Continue</button>
+
+  <div *ngIf="isAdmin" class="add-company-wrapper">
+    <button class="danger-button" (click)="openCompanyForm()">+ Add Company</button>
+  </div>
+
+  <div class="modal-overlay" *ngIf="showCreateForm">
+    <div class="modal">
+      <div class="modal-header">
+        <span>Create Company</span>
+        <span class="close-button" (click)="closeCompanyForm()">&#x2715;</span>
+      </div>
+
+      <div class="modal-body">
+        <label>Name</label>
+        <input type="text" [(ngModel)]="newCompany.name" placeholder="Company Name" required />
+
+        <label>Description</label>
+        <textarea [(ngModel)]="newCompany.description" rows="4" placeholder="Description"></textarea>
+
+        <button class="submit-button" (click)="createCompany()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>

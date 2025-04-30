@@ -1,0 +1,77 @@
+<div class="teams-container">
+    <h2 class="page-title">Teams</h2>
+  
+    <div class="teams-grid">
+      <!-- Team Card -->
+      <div class="team-card" *ngFor="let team of teams">
+        <div class="team-header">
+          <span class="team-name">{{ team.name }}</span>
+          <span class="project-count"># of Projects: {{ team.projects.length || 0 }}</span>
+        </div>
+  
+        <div class="team-body">
+          <p class="members-title">Members</p>
+          <div class="member-tags">
+            <span class="member" *ngFor="let user of team.teammates || []">
+              {{ user?.profile?.firstName || 'Unknown' }} {{ user?.profile?.lastName?.charAt(0) || '?' }}.
+            </span>
+          </div>
+  
+          <div class="team-actions">
+            <button class="view-button" (click)="goToProjects(team.id)">View</button>
+            <button class="edit-button" (click)="openEditForm(team); $event.stopPropagation()">Edit</button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- New Team Card -->
+      <div class="team-card new-team" (click)="openCreateForm()">
+        <div class="plus">+</div>
+        <p>New Team</p>
+      </div>
+    </div>
+  
+    <!-- Modal -->
+    <div class="modal-overlay" *ngIf="showCreateForm">
+      <div class="modal">
+        <div class="modal-header">
+          <span>{{ isEditMode ? 'Edit Team' : 'Create Team' }}</span>
+          <span class="close-button" (click)="closeCreateForm()">&#x2715;</span>
+        </div>
+  
+        <div class="modal-body">
+          <label>Team Name</label>
+          <input type="text" [(ngModel)]="newTeam.name" />
+  
+          <label>Description</label>
+          <input type="text" [(ngModel)]="newTeam.description" />
+  
+          <h3>Select Members</h3>
+          <select [(ngModel)]="selectedUser">
+            <option [ngValue]="null" disabled>Select a user</option>
+            <option *ngFor="let user of allUsers" [ngValue]="user">
+              {{ user.profile.firstName }} {{ user.profile.lastName.charAt(0) }}.
+            </option>
+          </select>
+          <button class="add-button" (click)="addTeammate(selectedUser)">Add</button>
+  
+          <div class="member-tags">
+            <div class="member" *ngFor="let user of newTeam.teammates">
+              {{ user.profile.firstName }} {{ user.profile.lastName.charAt(0) }}.
+              <span class="remove" (click)="removeTeammate(user.id)">&#x2715;</span>
+            </div>
+          </div>
+          <div class="modal-footer">
+          <button class="submit-button" (click)="submitNewTeam()">
+            {{ isEditMode ? 'Save Changes' : 'Submit' }}
+          </button>
+  
+          <button *ngIf="isEditMode" class="delete-button" (click)="deleteTeam(editedTeamId!)">
+            Delete Team
+          </button>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

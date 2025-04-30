@@ -1,0 +1,27 @@
+<div class="login-wrapper">
+    <h1>COOK SYSTEMS</h1>
+    <h2>A FINAL APP</h2>
+  
+    <div class="login-card">
+      <img src="assets/Cook-logo-v-4c.png" alt="Login Icon" />
+  
+      <form (ngSubmit)="onSubmit()">
+        <input
+          type="text"
+          placeholder="email"
+          [(ngModel)]="credentials.username"
+          name="username"
+          required
+        />
+        <input
+          type="password"
+          placeholder="password"
+          [(ngModel)]="credentials.password"
+          name="password"
+          required
+        />
+        <button type="submit">LOGIN</button>
+      </form>
+    </div>
+  </div>
+  

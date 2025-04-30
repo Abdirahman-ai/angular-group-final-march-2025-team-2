@@ -1,0 +1,19 @@
+<nav class="navbar">
+  <div class="left-branding">
+    <img src="assets/Cook-logo-v-4c.png" alt="Logo" class="logo-img" />
+    <span *ngIf="isAdmin" class="admin-label">ACTING AS ADMIN</span>
+  </div>
+
+  <ul class="nav-links">
+    <li><a routerLink="/announcements">Home</a></li>
+    <li><a routerLink="/select-company">Company</a></li>
+    <li><a routerLink="/teams">Teams</a></li>
+    <li *ngIf="isAdmin"><a routerLink="/users">Users</a></li>
+  </ul>
+
+  <div class="user-info">
+    <span *ngIf="user">{{ user.profile.firstName }} {{ user.profile.lastName }}</span>
+    <span *ngIf="isAdmin" class="admin-badge">Admin</span>
+    <button (click)="logout()">Logout</button>
+  </div>
+</nav>

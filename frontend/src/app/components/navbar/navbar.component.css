@@ -1,0 +1,81 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #071e29;
+    color: #2ac1a2;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .nav-links a {
+    color: #2ac1a2;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .nav-links a:hover {
+    text-decoration: underline;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .admin-badge {
+    background-color: #7f57ff;
+    color: white;
+    padding: 0.3rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+  }
+  
+  button {
+    background-color: transparent;
+    color: #ff6b6b;
+    border: 1px solid #ff6b6b;
+    padding: 0.4rem 0.8rem;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  
+  button:hover {
+    background-color: #ff6b6b;
+    color: white;
+  }
+  
+  .left-branding {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .logo-img {
+    height: 40px;
+    width: auto;
+  }
+  
+  .admin-label {
+    font-weight: bold;
+    color: #ffa726; /* Orange */
+    background-color: rgba(255, 167, 38, 0.1);
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+  }
+  
+  

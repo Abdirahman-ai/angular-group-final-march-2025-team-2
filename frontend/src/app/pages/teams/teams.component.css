@@ -1,0 +1,281 @@
+.teams-page {
+    padding: 2rem;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 2rem;
+    color: #00bfa6;
+    margin-bottom: 1.5rem;
+}
+
+.teams-container {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.teams-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    justify-items: center;
+}
+
+.team-card {
+    background-color: #0B2D45;
+    color: white;
+    border-radius: 12px;
+    width: 220px;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.team-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.team-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.members-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #87c0cd;
+    margin-bottom: 0.5rem;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.member-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    justify-content: center;
+}
+
+.member {
+    background-color: #1BA098;
+    color: #0f0f0f;
+    border-radius: 20px;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.new-team {
+    border: 2px dashed #f4c27f;
+    color: #f4c27f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.new-team:hover {
+    background-color: rgba(244, 194, 127, 0.1);
+}
+
+.plus {
+    font-size: 2rem;
+    margin-bottom: 0.25rem;
+}
+
+.new-label {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal {
+    background-color: #0B2D45;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 350px;
+    color: white;
+    position: relative;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.close-button {
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: red;
+}
+
+.modal-body label {
+    display: block;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.modal-body input,
+.modal-body select {
+    width: 100%;
+    padding: 0.4rem;
+    margin-top: 0.25rem;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    margin-bottom: 1rem;
+}
+
+.add-button {
+    background-color: #1BA098;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.member-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.member {
+    background-color: #1BA098;
+    color: #0f0f0f;
+    border-radius: 20px;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.remove {
+    color: red;
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
+
+.team-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.edit-button,
+.delete-button {
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.edit-button {
+    background-color: #1BA098;
+    color: white;
+}
+
+.edit-button:hover {
+    background-color: #16887f;
+}
+
+.delete-button {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.delete-button:hover {
+    background-color: #c0392b;
+}
+
+.view-button {
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    background-color: #1BA098;
+    color: white;
+}
+
+.view-button:hover {
+    background-color: #16887f;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+  }
+  
+  .modal-footer .submit-button,
+.modal-footer .delete-button {
+  min-width: 120px;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-footer .submit-button {
+    background-color: #1BA098;
+    color: white;
+  }
+  
+  .modal-footer .submit-button:hover {
+    background-color: #16887f;
+  }
+  
+  .modal-footer .delete-button {
+    background-color: #e74c3c;
+    color: white;
+  }
+  
+  .modal-footer .delete-button:hover {
+    background-color: #c0392b;
+  }
